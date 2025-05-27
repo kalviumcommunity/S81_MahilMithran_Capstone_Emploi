@@ -1,0 +1,74 @@
+/* Container with gradient background, full screen height, center content */
+.home-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 1.5rem;
+  background: linear-gradient(135deg, #60a5fa, #2563eb); /* blue gradient */
+  text-align: center;
+  color: #1e3a8a; /* dark blue text */
+}
+
+/* Large bold title */
+.home-title {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* Highlighted span in title */
+.highlight {
+  color: #1e40af; /* darker blue */
+}
+
+/* Description paragraph */
+.home-description {
+  max-width: 600px;
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+/* Button container */
+.button-group {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Primary button style */
+.btn {
+  padding: 0.75rem 2rem;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s ease;
+  font-size: 1rem;
+}
+
+/* Filled primary button */
+.btn-primary {
+  background-color: #1e3a8a; /* dark blue */
+  color: white;
+  box-shadow: 0 4px 6px rgba(30, 58, 138, 0.4);
+}
+
+.btn-primary:hover {
+  background-color: #1e40af;
+}
+
+/* Outline button */
+.btn-outline {
+  background-color: transparent;
+  color: #1e3a8a;
+  border: 2px solid #1e3a8a;
+  box-shadow: 0 4px 6px rgba(30, 58, 138, 0.2);
+}
+
+.btn-outline:hover {
+  background-color: #bfdbfe; /* light blue */
+  color: #1e40af;
+}
