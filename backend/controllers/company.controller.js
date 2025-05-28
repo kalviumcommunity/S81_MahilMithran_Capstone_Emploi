@@ -1,47 +1,47 @@
     import { Company } from "../models/company.model.js";
 
     // ✅ Register Company
-    export const registerCompany = async (req, res) => {
-        try {
-            const userId = req.userId || req.user?.userId || req.body.userId;
+        export const registerCompany = async (req, res) => {
+            try {
+                const userId = req.userId || req.user?.userId || req.body.userId;
 
-            if (!userId) {
-                return res.status(401).json({
-                    message: "Unauthorized: Missing user ID",
+                if (!userId) {
+                    return res.status(401).json({
+                        message: "Unauthorized: Missing user ID",
+                        success: false,
+                    });
+                }
+
+                const { name, description, website, location } = req.body;
+
+                if (!name || !description || !website || !location) {
+                    return res.status(400).json({
+                        message: "All fields (name, description, website, location) are required",
+                        success: false,
+                    });
+                }
+
+                const newCompany = await Company.create({
+                    name,
+                    description,
+                    website,
+                    location,
+                    userId, // ✅ matches schema
+                });
+
+                return res.status(201).json({
+                    message: "Company registered successfully",
+                    company: newCompany,
+                    success: true,
+                });
+
+            } catch (error) {
+                console.error("Register Company Error:", error.message, error.stack);
+                return res.status(500).json({
+                    message: "Server Error",
                     success: false,
                 });
             }
-
-            const { name, description, website, location } = req.body;
-
-            if (!name || !description || !website || !location) {
-                return res.status(400).json({
-                    message: "All fields (name, description, website, location) are required",
-                    success: false,
-                });
-            }
-
-            const newCompany = await Company.create({
-                name,
-                description,
-                website,
-                location,
-                userId, // ✅ matches schema
-            });
-
-            return res.status(201).json({
-                message: "Company registered successfully",
-                company: newCompany,
-                success: true,
-            });
-
-        } catch (error) {
-            console.error("Register Company Error:", error.message, error.stack);
-            return res.status(500).json({
-                message: "Server Error",
-                success: false,
-            });
-        }
     };
 
     // ✅ Get All Companies for Logged-in User

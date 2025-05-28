@@ -1,50 +1,50 @@
     import { Job } from "../models/job.model.js";
 
     // Admin posts a job
-    export const postJob = async (req, res) => {
-        try {
-            const { title, description, requirements, salary, location, jobType, experience, position, companyId } = req.body;
-            const userId = req.userId; // Assuming this is coming from authentication middleware
+        export const postJob = async (req, res) => {
+            try {
+                const { title, description, requirements, salary, location, jobType, experience, position, companyId } = req.body;
+                const userId = req.userId; // Assuming this is coming from authentication middleware
 
-            // Validate required fields
-            if (!title || !description || !requirements || !salary || !location || !jobType || !experience || !position || !companyId) {
-                return res.status(400).json({
-                    message: "Something is missing",
-                    success: false,
+                // Validate required fields
+                if (!title || !description || !requirements || !salary || !location || !jobType || !experience || !position || !companyId) {
+                    return res.status(400).json({
+                        message: "Something is missing",
+                        success: false,
+                    });
+                }
+
+                // Split requirements into an array
+                const reqArray = requirements.split(',');
+
+                // Create the job
+                const job = await Job.create({
+                    title,
+                    description,
+                    requirements: reqArray,
+                    salary: Number(salary),
+                    location,
+                    jobType,
+                    experienceLevel: experience,
+                    position,
+                    company: companyId,
+                    created_by: userId
+                });
+
+                return res.status(201).json({
+                    message: "Job created successfully",
+                    job,
+                    success: true
+                });
+
+            } catch (error) {
+                console.error("Error during job creation:", error); // Log error for debugging
+                return res.status(500).json({
+                    message: "Internal server error",
+                    success: false
                 });
             }
-
-            // Split requirements into an array
-            const reqArray = requirements.split(',');
-
-            // Create the job
-            const job = await Job.create({
-                title,
-                description,
-                requirements: reqArray,
-                salary: Number(salary),
-                location,
-                jobType,
-                experienceLevel: experience,
-                position,
-                company: companyId,
-                created_by: userId
-            });
-
-            return res.status(201).json({
-                message: "Job created successfully",
-                job,
-                success: true
-            });
-
-        } catch (error) {
-            console.error("Error during job creation:", error); // Log error for debugging
-            return res.status(500).json({
-                message: "Internal server error",
-                success: false
-            });
-        }
-    };
+        };
 
     // Students get all jobs
     export const getAllJobs = async (req, res) => {
